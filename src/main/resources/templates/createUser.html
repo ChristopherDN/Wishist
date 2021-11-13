@@ -1,0 +1,93 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<link rel="stylesheet" type="text/css" href="reset.min.css" />
+<link rel="stylesheet" type="text/css" href="style.scss" />
+<link rel="stylesheet" type="text/css" href="header-9.css" />
+<style>
+    #footer {
+        position: fixed;
+        padding: 10px 10px 0px 10px;
+        bottom: 0;
+        width: 100%;
+        /* Height of the footer*/
+        height: 100px;
+        background: #2c2a2a;
+    }
+    html,body {
+        background-image: none;
+    }
+</style>
+<div style="text-align: center;">
+    <body>
+    <header class="site-header">
+        <div class="wrapper site-header__wrapper">
+            <div class="site-header__start">
+                <a href="/" class="brand">Wishlist</a>
+            </div>
+            <div class="site-header__middle">
+                <nav class="nav">
+                    <button class="nav__toggle" aria-expanded="false" type="button">
+                        menu
+                    </button>
+                    <ul class="nav__wrapper">
+                        <li class="nav__item"><a href="/">Home</a></li>
+                        <li class="nav__item"><a href="contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="site-header__end">
+                <a class="button" href="login">Sign in</a>
+            </div>
+        </div>
+    </header>
+    <!-- Header End -->
+    <script type="text/javascript" src="header-9.js"></script>
+    <br>
+    <h1>Create user </h1>
+    <p>Please fill out your info</p>
+    <br>
+    <form method="post" th:action="@{/register}">
+        <label>Name: </label>
+        <br>
+        <input type th:name="name">
+        <br>
+        <label>Email: </label>
+        <br>
+        <input type th:name="email">
+        <br>
+        <label>Password: </label>
+        <br>
+        <input type="password" th:name="password">
+        <br>
+        <br>
+        <input type="submit" value="Create user"/>
+        <br>
+        <br>
+        <a href="/"> <input type="button" value="Cancel">
+        </a>
+    </form>
+    <pic>
+        <img src="img/Bg.jpg">
+    </pic>
+    <div id="footer">
+        <br>
+        <div class="contact-me">
+            <a class="btn" href="mailto:jens8592@stud.kea.dk">CONTACT US</a>
+            <br>
+        </div>
+        <img style="height: 15px; width: 15px" src="img/linkedin.png" alt="fvb">
+        <a class ="footer-link" href="https://www.linkedin.com/">
+            <link rel="stylesheet" href="">LinkedIn</a>
+        <img style="height: 15px; width: 15px" src="img/twitter-logo-button.png" alt="fvb">
+        <a class="footer-link" href="https://twitter.com/">Twitter</a>
+        <img style="height: 15px; width: 15px" src="img/facebook-logo-button.png" alt="fvb">
+        <a class="footer-link" href="https://www.facebook.com/">Facebook</a>
+        <br>
+        <a>© 2021 Wishlist.</a>
+    </div>
+    </body>
+</div>
+</html>

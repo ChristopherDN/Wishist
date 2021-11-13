@@ -1,0 +1,130 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Wishlist</title>
+    <link rel="stylesheet" type="text/css" href="reset.min.css" />
+    <link rel="stylesheet" type="text/css" href="style.scss" />
+    <link rel="stylesheet" type="text/css" href="header-9.css" />
+    <style>
+        #footer {
+            position: fixed;
+            padding: 10px 10px 0px 10px;
+            bottom: 0;
+            width: 100%;
+            /* Height of the footer*/
+            height: 100px;
+            background: #2c2a2a;
+        }
+        html,body {
+            background-image: none;
+        }
+
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 8px;
+        }
+
+        #tr1:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        #table1 {
+            counter-reset: rowNumber;
+        }
+        table #tr1 {
+            counter-increment: rowNumber;
+        }
+        table #tr1 td:first-child::before {
+            content: counter(rowNumber);
+            min-width: 1em;
+            margin-right: 0.5em;
+        }
+    </style>
+</head>
+<div style="text-align: center;">
+    <body>
+    <header class="site-header">
+        <div class="wrapper site-header__wrapper">
+            <div class="site-header__start">
+                <a href="/" class="brand">Wishlist</a>
+            </div>
+            <div class="site-header__middle">
+                <nav class="nav">
+                    <button class="nav__toggle" aria-expanded="false" type="button">
+                        menu
+                    </button>
+                    <ul class="nav__wrapper">
+                        <li class="nav__item"><a href="frontpage">Home</a></li>
+                        <li class="nav__item"><a href="contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="site-header__end">
+                <a class="button" href="/logout">log out</a>
+            </div>
+        </div>
+    </header>
+    <!-- Header End -->
+    <script type="text/javascript" src="header-9.js"></script>
+
+<center>
+<table style="margin-top: 20px;">
+    <tr>
+        <th>Wish Number:</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Url</th>
+        <th>Reserved wishes</th>
+    </tr>
+    <tr id="tr1" th:each="product : ${loopproduct}">
+        <td></td>
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.description}"></td>
+        <td th:text="${product.price}"></td>
+        <td th:text="${product.url}"></td>
+        <td>-</td>
+    </tr>
+</table>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <form action="/shareWishlist/{id}">
+        <button Style="height: 30px"type="submit">Share wishlist</button>
+    </form>
+    <br>
+    <form action="/addproduct">
+        <button Style="height: 30px"type="submit">Edit wishlist</button>
+    </form>
+    <pic>
+        <img src="img/Bg.jpg">
+    </pic>
+</center>
+    <div id="footer">
+        <br>
+        <div class="contact-me">
+            <a class="btn" href="mailto:jens8592@stud.kea.dk">CONTACT US</a>
+            <br>
+        </div>
+        <img style="height: 15px; width: 15px" src="img/linkedin.png" alt="fvb">
+        <a class ="footer-link" href="https://www.linkedin.com/">
+            <link rel="stylesheet" href="">LinkedIn</a>
+        <img style="height: 15px; width: 15px" src="img/twitter-logo-button.png" alt="fvb">
+        <a class="footer-link" href="https://twitter.com/">Twitter</a>
+        <img style="height: 15px; width: 15px" src="img/facebook-logo-button.png" alt="fvb">
+        <a class="footer-link" href="https://www.facebook.com/">Facebook</a>
+        <br>
+        <a>© 2021 Wishlist.</a>
+    </div>
+    </body>
+</div>
+</html>

@@ -1,0 +1,143 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <link rel="stylesheet" type="text/css" href="reset.min.css" />
+    <link rel="stylesheet" type="text/css" href="style.scss" />
+    <link rel="stylesheet" type="text/css" href="header-9.css" />
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 8px;
+        }
+
+        #tr1:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        #table1 {
+            counter-reset: rowNumber;
+        }
+        table #tr1 {
+            counter-increment: rowNumber;
+        }
+        table #tr1 td:first-child::before {
+            content: counter(rowNumber);
+            min-width: 1em;
+            margin-right: 0.5em;
+        }
+        #footer {
+            position: fixed;
+            padding: 10px 10px 0px 10px;
+            bottom: 0;
+            width: 100%;
+            /* Height of the footer*/
+            height: 100px;
+            background: #2c2a2a;
+        }
+        html,body {
+            background-image: none;
+        }
+    </style>
+
+</head>
+
+<div style="text-align: center;">
+    <Body>
+    <header class="site-header">
+        <div class="wrapper site-header__wrapper">
+            <div class="site-header__start">
+                <a href="/" class="brand">Wishlist</a>
+            </div>
+            <div class="site-header__middle">
+                <nav class="nav">
+                    <button class="nav__toggle" aria-expanded="false" type="button">
+                        menu
+                    </button>
+                    <ul class="nav__wrapper">
+                        <li class="nav__item"><a href="frontpage">Home</a></li>
+                        <li class="nav__item"><a href="contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="site-header__end">
+                <a class="button" href="/logout">log out</a>
+            </div>
+        </div>
+    </header>
+    <!-- Header End -->
+    <script type="text/javascript" src="header-9.js"></script>
+    <center>
+        <table style = "margin-top: 20px;">
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Url</th>
+                <th>Add item to your wishlist</th>
+
+            </tr>
+            <tr>
+                <form  action="/topProducts" method="post">
+                    <td><input type="text" name="name"></td>
+                    <td><input type="text" name="description"></td>
+                    <td><input type="text" name="price"></td>
+                    <td> <input type="text" name="url"></td>
+                    <td> <input type="checkbox" name="add"></td>
+                </form>
+            </tr>
+            <tr id="tr1" th:border="1" th:each="product : ${loopproduct}">
+                <td></td>
+                <td th:text="${product.name}"></td>
+                <td th:text="${product.description}"></td>
+                <td th:text="${product.price}"></td>
+                <td th:text="${product.url}"></td>
+                    <form th:action="@{/remove/{id}(id=${product.name})}" th:object="${product}">
+                        <button type="submit">remove</button>
+                    </form>
+                </td>
+                <td></td>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <form action="/wishlist">
+            <button Style="height: 30px"type="submit">Add to wishlist</button>
+        </form>
+        <pic>
+            <img src="img/Bg.jpg">
+        </pic>
+    </center>
+    <br>
+  <!--  <pic>
+        <img src="img/Bg.jpg">
+    </pic>-->
+    <div id="footer">
+        <br>
+        <div class="contact-me">
+            <a class="btn" href="mailto:jens8592@stud.kea.dk">CONTACT US</a>
+            <br>
+        </div>
+        <img style="height: 15px; width: 15px" src="img/linkedin.png" alt="fvb">
+        <a class ="footer-link" href="https://www.linkedin.com/">
+            <link rel="stylesheet" href="">LinkedIn</a>
+        <img style="height: 15px; width: 15px" src="img/twitter-logo-button.png" alt="fvb">
+        <a class="footer-link" href="https://twitter.com/">Twitter</a>
+        <img style="height: 15px; width: 15px" src="img/facebook-logo-button.png" alt="fvb">
+        <a class="footer-link" href="https://www.facebook.com/">Facebook</a>
+        <br>
+        <a>© 2021 Wishlist.</a>
+    </div>
+
+    </body>
+
+</div>
+</html>
+<!--<a href="login"> <input type="checkbox" value="Login"></a>-->

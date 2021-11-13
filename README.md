@@ -1,2 +1,1 @@
-# Wishist
-Wishlist Webpage
+# WishList

@@ -1,0 +1,65 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Wishlist</title>
+    <link rel="stylesheet" type="text/css" href="reset.min.css" />
+    <link rel="stylesheet" type="text/css" href="style.scss" />
+    <link rel="stylesheet" type="text/css" href="header-9.css" />
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 8px;
+        }
+
+        #tr1:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        table #tr1 {
+            counter-increment: rowNumber;
+        }
+        table #tr1 td:first-child::before {
+            content: counter(rowNumber);
+            min-width: 1em;
+            margin-right: 0.5em;
+        }
+    </style>
+</head>
+<div style="text-align: center;">
+    <body>
+    <center>
+        <table style="margin-top: 50px;">
+            <tr>
+                <th>Wish Number:</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Url</th>
+            </tr>
+            <tr id="tr1" th:each="product : ${loop}">
+                <td></td>
+                <td th:text="${product.name}"></td>
+                <td th:text="${product.description}"></td>
+                <td th:text="${product.price}"></td>
+                <td th:text="${product.url}"></td>
+                    <form th:action="@{/shareWishlist/{id}(id=${loop})}" th:object="${product}">
+                </form>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <h1>Please Copy this link and send it to your friends!</h1>
+        <form action="/login">
+            <button Style="height: 30px"type="submit">Frontpage</button>
+        </form>
+    </center>
+    </body>
+</div>
+</html>
