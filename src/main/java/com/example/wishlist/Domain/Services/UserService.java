@@ -7,12 +7,12 @@ public class UserService {
   User user;
   SQLUsers sqlUsers = new SQLUsers();
 
-  public void createAccount(String name, String email, String password){
-    sqlUsers.createAccount(name, email, password);
+  public void registerUser(String name, String email, String password){
+    sqlUsers.registerUser(name, email, password);
   }
 
-  public User validate(String username, String password){
-    user = sqlUsers.validate(username,password);
+  public User validateLogin(String username, String password){
+    user = sqlUsers.validateLogin(username,password);
     return user;
   }
 }

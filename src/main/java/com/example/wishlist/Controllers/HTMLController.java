@@ -34,16 +34,20 @@ public class HTMLController {
 
   @PostMapping("/register")
   public String register(WebRequest request) {
-    String name = request.getParameter("name");
-    String username = request.getParameter("email");
-    String password = request.getParameter("password");
-    userService.createAccount(name,username,password);
+    userService.registerUser(
+        request.getParameter("name"),
+        request.getParameter("email"),
+        request.getParameter("password"));
     return "login";
   }
 
   @PostMapping("/frontpage")
-  public String frontpage(WebRequest request, HttpSession session, Model model) {
-    user = userService.validate(request.getParameter("user"), request.getParameter("password"));
+  public String validateLogin(WebRequest request, HttpSession session, Model model) {
+    user = userService.validateLogin(
+        request.getParameter("user"),
+        request.getParameter("password"));
+
+    //Set Session to user, validate user is not null.
     if (session.getAttribute("user") == null) {
       if (user != null) {
         model.addAttribute("user", user);
@@ -66,13 +70,6 @@ public class HTMLController {
   public String contact() {
     return "contact";
   }
-
-  @GetMapping("/topProducts")
-  public String topProducts() {
-    return "topProducts";
-  }
-
-
 }
 
 

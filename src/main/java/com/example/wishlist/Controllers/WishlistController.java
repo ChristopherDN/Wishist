@@ -17,7 +17,7 @@ public class WishlistController {
   User user;
 
   @GetMapping("/frontpage")
-  public String addWishlist(Model model, HttpSession session) {
+  public String showWishlists(Model model, HttpSession session) {
     user = (User) session.getAttribute("user");
     model.addAttribute("loopwishlists", wishlistService.getWishlists(user));
     return "frontpage";
@@ -31,17 +31,9 @@ public class WishlistController {
     return "redirect:/frontpage";
   }
 
-  //TODO skal laves om, så den sletter på DB og ikke kun i arraylisten.
   @GetMapping("/removeWishlist/{id}")
   public String deleteWishList(@PathVariable(value = "id") String id) {
     wishlistService.deleteWishlist(user, id);
     return "redirect:/frontpage";
   }
-
-  @GetMapping("/wishList")
-  public String wishList() {
-    return "wishList";
-  }
-
-
 }

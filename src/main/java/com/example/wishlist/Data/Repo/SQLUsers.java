@@ -3,12 +3,11 @@ package com.example.wishlist.Data.Repo;
 import com.example.wishlist.Data.Utility.DBManager;
 import com.example.wishlist.Domain.Models.User;
 import org.springframework.stereotype.Controller;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-
 
 @Controller
 public class SQLUsers {
@@ -16,7 +15,6 @@ public class SQLUsers {
   PreparedStatement ps;
   boolean bol;
   ResultSet rs;
-  ArrayList<User> users = new ArrayList<>();
   User user;
 
   public void query(String sqlCommand) {
@@ -29,8 +27,6 @@ public class SQLUsers {
     }
   }
 
-  //throws ExceptionService
-  //Skal ændres så den ikke sender en sql statement, men laver et run() kald i stedet.
   public ResultSet load(String sqlCommand) {
     try {
       connection = DBManager.getConnection();
@@ -39,28 +35,16 @@ public class SQLUsers {
     } catch (SQLException ex) {
       System.out.println(ex.getMessage());
 //throw new ExceptionService(ex.getMessage())
+      //Chose not to use ExceptionService, and instead catch as early as possible.
     }
     return rs;
   }
 
-  public ArrayList<User> getResults(ResultSet rs) {
-    try {
-      users.clear();
-      while (rs.next()) {
-        users.add(new User(rs.getString(2), rs.getString(3), rs.getString(4)));
-      }
-    } catch (SQLException ex) {
-      System.out.println(ex.getMessage());
-    }
-    return users;
-  }
-
-  public User getUser(ResultSet rs) {
+  public User rsToUser(ResultSet rs) {
     try {
       user = null;
       while (rs.next()) {
         user = new User(rs.getString(1), rs.getString(2), rs.getString(3));
-        users.add(user);
       }
     } catch (SQLException ex) {
       System.out.println(ex.getMessage());
@@ -68,12 +52,12 @@ public class SQLUsers {
     return user;
   }
 
-  public User validate(String n, String p) {
-    return getUser(load("SELECT name, email, password FROM wishlist.users WHERE name = '" + n + "' AND password = '" + p + "'"));
+  public User validateLogin(String n, String p) {
+    return rsToUser(load("SELECT name, email, password FROM wishlist.users WHERE name = '" + n + "' AND password = '" + p + "'"));
   }
 
-  public void createAccount(String name, String email, String password) {
+  public void registerUser(String name, String email, String password) {
     query("insert into wishlist.users(Name, Email, Password, type) values(" + "\"" + name + "\", \"" +
-        email + "\", \"" + password + "\", \"" + 1 +  "\")");
+        email + "\", \"" + password + "\", \"" + 1 + "\")");
   }
 }

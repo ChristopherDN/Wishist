@@ -12,7 +12,7 @@ public class WishlistService {
 
   public void deleteWishlist(User user,String event) {
     sqlWishlist.deleteWishlist(user, event);
-    user.setMyWishlists(sqlWishlist.getWishlists(user));
+    user.setMyWishlists(sqlWishlist.loadWishlists(user));
   }
 
   public void createWishlist(User user, String event) {
@@ -25,12 +25,12 @@ public class WishlistService {
   }
 
   public ArrayList<Wishlist> getWishlists(User user) {
-    user.setMyWishlists(sqlWishlist.getWishlists(user));
+    user.setMyWishlists(sqlWishlist.loadWishlists(user));
     return user.getWishlist();
   }
 
   public void setWishlistId(User user, String event) {
-    wishlistId = sqlWishlist.setWishlistId(user, event);
+    wishlistId = sqlWishlist.setGetWishlist(user, event);
     for (int i = 0; i <user.getWishlist().size() ; i++) {
       if (user.getWishlist().get(i).getEvent().equals(event)) {
         user.getWishlist().get(i).setId(wishlistId);

@@ -1,7 +1,7 @@
 package com.example.wishlist.Data.Repo;
 
 import com.example.wishlist.Data.Utility.DBManager;
-import com.example.wishlist.Domain.Models.TempProduct;
+import com.example.wishlist.Domain.Models.Product;
 import org.springframework.stereotype.Controller;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,12 +16,10 @@ public class SQLProducts {
   PreparedStatement ps;
   boolean bol;
   ResultSet rs;
-  ArrayList<TempProduct> tempProducts = new ArrayList<>();
+  ArrayList<Product> products = new ArrayList<>();
   int userid;
   int wishlistId;
 
-
-  //Skal denne laves om til at run() functions?
   public void query(String sqlCommand) {
     try {
       connection = DBManager.getConnection();
@@ -32,8 +30,6 @@ public class SQLProducts {
     }
   }
 
-  //throws ExceptionService
-  //Skal ændres så den ikke sender en sql statement, men laver et run() function i stedet.
   public ResultSet load(String sqlCommand)  {
     try {
       connection = DBManager.getConnection();
@@ -42,23 +38,24 @@ public class SQLProducts {
     } catch (SQLException ex) {
       System.out.println(ex.getMessage());
       //throw new ExceptionService(ex.getMessage());
+      //Chose not to use ExceptionService, and instead catch as early as possible.
     }
     return rs;
   }
 
-  public ArrayList<TempProduct> getResults(ResultSet rs) {
+  public ArrayList<Product> rsToArray(ResultSet rs) {
     try {
-      tempProducts.clear();
+      products.clear();
       while (rs.next()) {
-        tempProducts.add(new TempProduct(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(4)));
+        products.add(new Product(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(4)));
       }
     } catch (SQLException ex) {
       System.out.println(ex.getMessage());
     }
-    return tempProducts;
+    return products;
   }
 
-  public int getWishlistId(ResultSet rs){
+  public int rsToId(ResultSet rs){
     try {
       userid = 0;
       while (rs.next()) {
@@ -70,8 +67,8 @@ public class SQLProducts {
     return userid;
   }
 
-  public ArrayList<TempProduct> getProductsWishlist(int wishlistId) {
-    return getResults(load("SELECT name, description, price, url FROM wishlist.products WHERE wishlistid = " + wishlistId + " and type = 2"));
+  public ArrayList<Product> getProducts(int wishlistId) {
+    return rsToArray(load("SELECT name, description, price, url FROM wishlist.products WHERE wishlistid = " + wishlistId + " and type = 2"));
   }
 
   public void createProduct(String name, String description, String price, String url, int wishlistId) {
@@ -80,7 +77,7 @@ public class SQLProducts {
   }
 
   public void deleteProduct(String event, String productName) {
-    wishlistId = getWishlistId(load("select id from wishlist.wishlist where event = '" + event + "'"));
+    wishlistId = rsToId(load("select id from wishlist.wishlist where event = '" + event + "'"));
     query("delete from wishlist.products where name = '" + productName + "' AND wishlistid = " + wishlistId);
   }
 }

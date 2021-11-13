@@ -14,13 +14,6 @@ public class User {
     this.email = email;
     this.password = password;
   }
-//TODO Tror ikke vi har brug for denne her?? Systemet virker lige nu, uden brug af den.
-  public User(String name, String email, String password, ArrayList<Wishlist> myWishlists) {
-    this.name = name;
-    this.email = email;
-    this.password = password;
-    this.myWishlists = myWishlists;
-  }
 
   public void setName(String name) {
     this.name = name;

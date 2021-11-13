@@ -4,7 +4,6 @@ import com.example.wishlist.Data.Utility.DBManager;
 import com.example.wishlist.Domain.Models.User;
 import com.example.wishlist.Domain.Models.Wishlist;
 import org.springframework.stereotype.Controller;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,8 +30,6 @@ public class SQLWishlist {
     }
   }
 
-  //throws ExceptionService
-  //Skal ændres så den ikke sender en sql statement, men laver et run() function i stedet.
   public ResultSet load(String sqlCommand)  {
     try {
       connection = DBManager.getConnection();
@@ -41,11 +38,12 @@ public class SQLWishlist {
     } catch (SQLException ex) {
       System.out.println(ex.getMessage());
       //throw new ExceptionService(ex.getMessage());
+      //Chose not to use ExceptionService, and instead catch as early as possible.
     }
     return rs;
   }
 
-  public ArrayList<Wishlist> getResults(ResultSet rs) {
+  public ArrayList<Wishlist> rsToArray(ResultSet rs) {
     try {
       wishlists.clear();
       while (rs.next()) {
@@ -58,7 +56,7 @@ public class SQLWishlist {
   }
 
 
-  public int getId(ResultSet rs){
+  public int rsToId(ResultSet rs){
     try {
       userid = 0;
       while (rs.next()) {
@@ -72,26 +70,21 @@ public class SQLWishlist {
 
 
   public void createWishlist(User user, String event) {
-    userid = getId(load("select id from wishlist.users where name = '" + user.getName() + "'"));
+    userid = rsToId(load("select id from wishlist.users where name = '" + user.getName() + "'"));
     query("insert into wishlist.wishlist(event, userid) values('"+ event + "' , '" + userid + "')");
   }
 
-  //TODO Skal bruges af andre statements, til at give wishlistId
-  public int getWishlistId(User user, String event) {
-    return getId(load("select id from wishlist.wishlist where userid =" + getId(load("select id from wishlist.users where name = '" + user.getName())) + " and event ='" + event + "'"));
-  }
-
   public void deleteWishlist(User user, String event) {
-    query("delete from wishlist.wishlist where event = '" + event + "' and userid = " + getId(load("select id from wishlist.users where name = '" + user.getName() + "'")));
+    query("delete from wishlist.wishlist where event = '" + event + "' and userid = " + rsToId(load("select id from wishlist.users where name = '" + user.getName() + "'")));
   }
 
-  public ArrayList<Wishlist> getWishlists(User user) {
-    return getResults(load("select event from wishlist.wishlist where userid =" + getId(load("select id from wishlist.users where name = '" + user.getName() + "'"))));
+  public ArrayList<Wishlist> loadWishlists(User user) {
+    return rsToArray(load("select event from wishlist.wishlist where userid =" + rsToId(load("select id from wishlist.users where name = '" + user.getName() + "'"))));
   }
 
-  public int setWishlistId(User user, String event) {
-    userid = getId(load("select id from wishlist.users where name = '" + user.getName() + "'"));
-    return getId(load("select id from wishlist.wishlist where userid =" + userid +  " and event ='" + event + "'"));
+  public int setGetWishlist(User user, String event) {
+    userid = rsToId(load("select id from wishlist.users where name = '" + user.getName() + "'"));
+    return rsToId(load("select id from wishlist.wishlist where userid =" + userid +  " and event ='" + event + "'"));
   }
 }
 

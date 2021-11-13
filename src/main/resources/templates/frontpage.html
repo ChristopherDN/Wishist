@@ -15,10 +15,9 @@
             height: 100px;
             background: #2c2a2a;
         }
-        html,body {
-            background-image: none;
-        }
+    </style>
 
+    <style>
         table {
             font-family: arial, sans-serif;
             border-collapse: collapse;
@@ -64,6 +63,7 @@
                         menu
                     </button>
                     <ul class="nav__wrapper">
+                        <!--<li class="nav__item"><a href="/">Log out</a></li> todo remove?-->
                         <li class="nav__item"><a href="/contact">Contact</a></li>
                     </ul>
                 </nav>
@@ -72,7 +72,8 @@
                 <a class="button" href="/logout">Log out</a>
             </div>
         </div>
-        <!-- Header End -->
+
+
     </header>
     <script type="text/javascript" src="header-9.js"></script>
     <center>
@@ -84,6 +85,7 @@
                 <th>Remove wishlist</th>
                 <th>Add new wishlist</th>
             </tr>
+            <!--todo does not work endpoint wrong or method-->
             <tr>
                 <form action="/createWishlist" method="post">
 
@@ -109,10 +111,16 @@
                     </td>
             </tr>
         </table>
-        <pic>
-            <img src="img/Bg.jpg">
-        </pic>
+
     </center>
+    <br>
+    <br>
+    <!--<form action="/wishlist">
+        <button Style="height: 30px"type="submit">Finish wishlist</button>
+    </form>
+    -->
+    </p>
+
 
     <div id="footer">
         <br>
@@ -134,3 +142,6 @@
     </body>
 </div>
 </html>
+
+<form th:action="@{/shareWishlist/{id}(id=${loopproduct})}" th:object="${product}">
+</form>
