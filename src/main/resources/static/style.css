@@ -80,6 +80,14 @@ body {
   min-width: initial;
   padding: 0.5rem;
 }
+html,body{
+  background-image: url("static/img/bg.jpg" );
+  background-size: auto;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100%;
+  font-family: 'Numans', sans-serif;
+}
 
 .pic {
   opacity: 0.5;
