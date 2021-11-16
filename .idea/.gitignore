@@ -6,3 +6,9 @@
 /dataSources.local.xml
 # Editor-based HTTP Client requests
 /httpRequests/
+#Log Files
+*.log
+
+project.properties
+*.properties
+project.properties
