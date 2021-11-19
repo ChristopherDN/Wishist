@@ -16,16 +16,16 @@ public class DBManager {
 
     public static Connection getConnection(){
         if (connection != null) return connection;
-        try (InputStream input = new FileInputStream("src/main/resources/application.properties")) {
-            Properties properties = new Properties();
-            properties.load(input);
-            url = properties.getProperty("url");
-            user = properties.getProperty("user");
-            password = properties.getProperty("password");
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        //try (InputStream input = new FileInputStream("src/main/resources/application.properties")) {
+            //Properties properties = new Properties();
+            //properties.load(input);
+            url = System.getenv("url");//properties.getProperty("url");
+            user = System.getenv("user");//properties.getProperty("user");
+            password = System.getenv("password");//properties.getProperty("password");
+        //} catch (IOException ex) {
+           //ex.printStackTrace();
             System.out.println("connection already established");
-        }
+        //}
         try {
             connection = DriverManager.getConnection(url,user, password);
         } catch (SQLException e) {
